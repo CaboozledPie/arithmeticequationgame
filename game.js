@@ -520,7 +520,7 @@ var multiWinScreen = function() {
 };
 
 //processingJS
-draw = function() {
+void draw() {
     switch (gameState) {
         case "homeScreen":
             homeScreen();
@@ -542,6 +542,6 @@ draw = function() {
     }
     mouseIsReleased = false;
 };
-var mouseReleased = function() {
+void mouseReleased() {
     mouseIsReleased = true;
 };

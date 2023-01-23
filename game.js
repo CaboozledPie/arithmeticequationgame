@@ -258,7 +258,6 @@ var homeScreen = function() {
     if (inputCard(1/8*width, 77/120*height, width/3, height/4, [130, 130, 170], "", 0) === true) {
         playerCount = 1;
         deckSetup();
-        score[0] = 1;
         gameState = "game";
     }
     if (inputCard(13/24*width, 77/120*height, width/3, height/4, [200, 100, 100], "", 0) === true) {

@@ -161,7 +161,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
     if (mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-30, col[1]-30, col[2]-30);
     }
-    if (mousePressing && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
+    if (mouseIsPressed && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-60, col[1]-60, col[2]-60);
     }
     rect(x, y, w, h, height/40);
@@ -172,13 +172,13 @@ var inputCard = function(x, y, w, h, col, input, active) {
         if (active === "reset") {
             fill(255, 0, 0);
             noStroke();
-            ellipse(x+w-width/80, y+height/80, 3/80*height, 3/80*height);
+            ellipse(x+w-h/8, y+h/8, 3/11*h, 3/11*h);
         }
         else {
-            ellipse(x+w-width/80, y+height/80, height/20, height/20);
+            ellipse(x+w-h/8, y+h/8, height/20, height/20);
             fill(255, 255, 255);
             textSize(3/100*height);
-            text(active, x+w-width/80, y+height/80);
+            text(active, x+w-h/8, y+h/8);
         }
     }
     if (typeof(active) === 'object') {
@@ -193,7 +193,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
             if (active.length >= 3) {
                 for (var i = 2; i < min(active.length, 4); i++) {
                     fill(0, 0, 0);
-                    ellipse(x+w-width/80, y+height/80+i*20-40, 3/80*height, 3/80*height);
+                    ellipse(x+w-width/80, y+height/80+i*height/20-height/10, 3/80*height, 3/80*height);
                     fill(255, 255, 255);
                     textSize(0.026*height);
                     text(active[i], x+w-width/80, y+height/80+i*height/20-height/10);

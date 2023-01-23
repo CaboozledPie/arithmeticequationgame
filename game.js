@@ -520,7 +520,7 @@ var multiWinScreen = function() {
 };
 
 //processingJS
-var draw = function() {
+draw = function() {
     switch (gameState) {
         case "homeScreen":
             homeScreen();

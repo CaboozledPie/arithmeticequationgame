@@ -543,9 +543,9 @@ void draw() {
             multiWinScreen();
     }
     mouseIsReleased = false;
-    mousePressing = false;
 };
 void mouseReleased() {
+    mousePressing = false;
     mouseIsReleased = true;
 };
 void mousePressed() {

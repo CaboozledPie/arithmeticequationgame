@@ -17,7 +17,7 @@ frameRate(60);
 var mouseIsReleased = false;
 var mousePressing = false;
 textAlign(CENTER, CENTER);
-{
+
 var score = [];
 var lastScore = [];
 var gameState = "homeScreen";
@@ -30,7 +30,6 @@ var operationsDeck = [{value: "+", order: []}, {value: "-", order: []}, {value: 
 
 var currPlayer = 0;
 var players = [];
-}
 
 //color timers
 var lastPenalty = 0;

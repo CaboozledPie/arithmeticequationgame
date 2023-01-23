@@ -1,4 +1,6 @@
 import Math;
+size(800, 800, P2D);
+
 //for CPU game choose 1, or input a number for player count (up to 7)
 var playerCount = 1;
 

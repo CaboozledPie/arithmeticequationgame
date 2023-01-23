@@ -15,7 +15,6 @@ var goalScore = 5;
 
 frameRate(60);
 var mouseIsReleased = false;
-var mouseIsPresed = false;
 textAlign(CENTER, CENTER);
 
 //variables
@@ -174,7 +173,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
     if (mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-30, col[1]-30, col[2]-30);
     }
-    if (mouseIsPresed && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
+    if (mouseIsPressed && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-60, col[1]-60, col[2]-60);
     }
     rect(x, y, w, h, height/40);
@@ -289,7 +288,7 @@ var playerSelect = function() {
     for (var i = 0; i < 6; i++) {
         line(width/6+i*0.134*width, 0.63*height, width/6+i*0.134*width, 0.66*height);
     }
-    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && mouseIsPresed) {
+    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && mouseIsPressed) {
         pointerPos = mouseX;
     }
     strokeWeight(1);
@@ -542,11 +541,7 @@ void draw() {
             multiWinScreen();
     }
     mouseIsReleased = false;
-    mouseIsPresed = false;
 };
 void mouseReleased() {
     mouseIsReleased = true;
-};
-void mousePressed (){
-    mouseIsPresed = true;
 };

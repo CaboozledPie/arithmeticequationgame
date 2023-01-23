@@ -546,3 +546,4 @@ void draw() {
 void mouseReleased() {
     mouseIsReleased = true;
 };
+void mousePressed() {};

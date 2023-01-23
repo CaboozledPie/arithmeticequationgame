@@ -15,7 +15,6 @@ var goalScore = 5;
 
 frameRate(60);
 var mouseIsReleased = false;
-var mouseIsPressed = false;
 textAlign(CENTER, CENTER);
 
 //variables
@@ -546,7 +545,4 @@ void draw() {
 };
 void mouseReleased() {
     mouseIsReleased = true;
-};
-void mousePressed() {
-    mouseIsPressed = true;
 };

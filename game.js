@@ -13,13 +13,8 @@ var mouseIsReleased = false;
 textAlign(CENTER, CENTER);
 
 //variables
-{
 var score = [];
 var lastScore = [];
-for (var i = 0; i < max(2, playerCount); i++) {
-    score.push(goalScore);
-    lastScore.push(0);
-}
 var gameState = "homeScreen";
 var numerals = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var operations = ["+", "-", "x", "/"];
@@ -30,13 +25,18 @@ var operationsDeck = [{value: "+", order: []}, {value: "-", order: []}, {value: 
 
 var currPlayer = 0;
 var players = [];
-for (var i = 0; i < playerCount; i++) {
-    players.push({deck: [], func: []});
-    for (var x = 0; x < 5; x++) {
-        players[i].deck.push({value: round(random(0.5, numCardLimit + 0.49)), order: 0, used: false});
+var deckSetup = function() {
+    for (var i = 0; i < playerCount; i++) {
+        players.push({deck: [], func: []});
+        for (var x = 0; x < 5; x++) {
+            players[i].deck.push({value: round(random(0.5, numCardLimit + 0.49)), order: 0, used: false});
+        }
     }
-}
-}
+    for (var i = 0; i < max(2, playerCount); i++) {
+        score.push(goalScore);
+        lastScore.push(0);
+    }
+};
 
 //color timers
 var lastPenalty = 0;
@@ -125,18 +125,18 @@ var oppGameplay = function() {
     stroke(0, 0, 0);
     for (var i = 0; i < 5; i++) {
         fill(0, 174, 255);
-        rect(165+i*45, 15, 40, 55, 10);
+        rect(33/80*width+i*9/80*width, 3/80*height, height/10, 11/80*height, height/40);
     }
     for (var i = 0; i < 4; i++) {
         fill(255, 100, 100);
-        rect(210+i*45, 80, 40, 55, 10);
+        rect(21/40*width+i*9/80*width, height/5, height/10, 11/80*height, height/40);
     }
     fill(220, 220, 220);
-    rect(20, 80, 80, 55, 10);
+    rect(width/20, height/5, height/5, 11/80*height, height/40);
     fill(150, 150, 150);
-    rect(115, 80, 80, 55, 10);
+    rect(23/80*width, height/5, height/5, 11/80*height, height/40);
     fill(100, 100, 100);
-    rect(75, 15, 80, 55, 10);
+    rect(3/16*width, 3/80*height, height/5, 11/80*height, height/40);
     if (currTurn === false) {
         if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
@@ -171,9 +171,9 @@ var inputCard = function(x, y, w, h, col, input, active) {
     if (mouseIsPressed && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-60, col[1]-60, col[2]-60);
     }
-    rect(x, y, w, h, 10);
+    rect(x, y, w, h, height/40);
     fill(0, 0, 0);
-    textSize(15);
+    textSize(1/30*height);
     text(input, x+w/2, y+h/2);
     if (active !== 0 && typeof(active) !== 'object') {
         if (active === "reset") {
@@ -241,13 +241,58 @@ var resetGame = function() {
 //gamestates
 var homeScreen = function() {
     background(90, 152, 214);
-    textSize(50);
-    text("算数式\nカードゲーム", 200, 150);
-    if (inputCard(125, 250, 150, 100, [130, 130, 170], "", 0) === true) {
+    textSize(width/8);
+    fill(0, 0, 0);
+    text("算数式\nカードゲーム", width/2, height*3/8);
+    if (inputCard(1/8*width, 77/120*height, width/3, height/4, [130, 130, 170], "", 0) === true) {
+        playerCount = 1;
+        deckSetup();
         gameState = "game";
     }
-    textSize(25);
-    text("スタート", 200, 300);
+    if (inputCard(13/24*width, 77/120*height, width/3, height/4, [200, 100, 100], "", 0) === true) {
+        playerCount = 2;
+        gameState = "playerSelect";
+    }
+    fill(0, 0, 0);
+    textSize(width/20);
+    text("CPUゲーム", 7/24*width, 23/30*height);
+    text("マルチプレイ", 17/24*width, 23/30*height);
+};
+var playerSelect = function() {
+    var pointerPos = width/6+(playerCount-2)*0.134*width;
+    background(200, 100, 100);
+    textSize(width/10);
+    fill(0, 0, 0);
+    text("何人で\n遊びますか", width/2, height/3.5);
+    strokeWeight(1);
+    if (inputCard(1/25*width, 1/25*height, width/6, height/8, [130, 130, 170], "", 0) === true) {
+        gameState = "homeScreen";
+    }
+    if (inputCard(width/4, 0.73*height, width/2, height/5, [130, 130, 170], "", 0) === true) {
+        deckSetup();
+        gameState = "game";
+    }
+    fill(0, 0, 0);
+    textSize(height/20);
+    text("戻る", width*0.127, height*0.105);
+    textSize(width/16);
+    text("始めましょう!", width/2, height*0.835);
+    stroke(0, 0, 0);
+    strokeWeight(height/40);
+    line(width/6, 0.63*height, 5/6*width, 0.63*height);
+    for (var i = 0; i < 6; i++) {
+        line(width/6+i*0.134*width, 0.63*height, width/6+i*0.134*width, 0.66*height);
+    }
+    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && mouseIsPressed) {
+        pointerPos = mouseX;
+    }
+    strokeWeight(1);
+    fill(255, 0, 0);
+    triangle(pointerPos, 0.6*height, pointerPos - width/25, 0.55*height, pointerPos + width/25, 0.55*height);
+    fill(0, 0, 0);
+    textSize(width/20);
+    text(playerCount + "人", pointerPos-1, 0.51*height);
+    playerCount = Math.round((pointerPos-width/6)/(0.134*width)+2);
 };
 var game = function() {
     timer[1]++;
@@ -257,30 +302,30 @@ var game = function() {
     //turn text
     fill(0, 0, 0);
     if (currTurn === true) {
-        textSize(15);
+        textSize(3/80*width);
         if (playerCount === 1) {
-            text("あなたのターン", 330, 185);
+            text("あなたのターン", 33/40*width, 37/80*height);
         }
         else {
-            text("P"+(currPlayer+1)+"のターン", 330, 185);
+            text("P"+(currPlayer+1)+"のターン", 33/40*width, 37/80*height);
         }
-        text("式を作りなさい", 330, 215);
+        text("式を作りなさい", 33/40*width, 43/80*height);
         }
     else {
-        textSize(20);
-        text("CPUターン", 330, 180);
-        textSize(15);
-        text("欲しくない数を換\nえれます", 330, 220);
+        textSize(height/20);
+        text("CPUターン", 33/40*width, 37/80*height);
+        textSize(3/80*height);
+        text("欲しくない数を換\nえれます", 33/40*width, 9/16*height);
     }
     
     //CPU-specific code
     if (playerCount === 1) {
         oppGameplay();
         fill(0, 0, 0);
-        textSize(20);
-        text("残り:\n" + score[1], 35, 40);
+        textSize(height/20);
+        text("残り:\n" + score[1], 7/80*width, height/10);
         penaltyCol(lastScore[1]);
-        text("残り:\n" + score[1], 35, 40);
+        text("残り:\n" + score[1], 7/80*width, height/10);
     }
     
     //multiplayer-specific
@@ -291,10 +336,10 @@ var game = function() {
                 targetPlayer -= playerCount;
             }
             fill(0, 0, 0);
-            text("P"+(targetPlayer+1), 20+(((i+1)%2)*195), 38+(floor((i-1)/2)*40));
-            text(score[targetPlayer], 190+(((i+1)%2)*195), 38+(floor((i-1)/2)*40));
+            text("P"+(targetPlayer+1), width/20+(((i+1)%2)*39/80*width), 19/200*height+(floor((i-1)/2)*height/10));
+            text(score[targetPlayer], 19/40*width+(((i+1)%2)*39/80*width), 19/200*height+(floor((i-1)/2)*height/10));
             for (var x = 0; x < players[targetPlayer].deck.length; x++) {
-                if (inputCard(35+x*30+(((i+1)%2)*195), 20+(floor((i-1)/2)*40), 25, 33, [0, 174, 255], players[targetPlayer].deck[x].value, players[targetPlayer].deck[x].order) === true && players[targetPlayer].deck[x].used === false) {
+                if (inputCard(7/80*width+x*3/40*width+(((i+1)%2)*39/80*width), height/20+(floor((i-1)/2)*height/10), height/16, height*33/400, [0, 174, 255], players[targetPlayer].deck[x].value, players[targetPlayer].deck[x].order) === true && players[targetPlayer].deck[x].used === false) {
                     players[targetPlayer].deck[x].used = true;
                     players[targetPlayer].deck[x].order = "reset";
                     var newNum = round(random(0.5, numCardLimit + 0.49));
@@ -308,11 +353,11 @@ var game = function() {
     }
     
     //answer card
-    inputCard(160, 160, 80, 80, [230, 200, 100], currAns, 0);
+    inputCard(height*2/5, height*2/5, height/5, height/5, [230, 200, 100], currAns, 0);
     
     //numberDeck buttons
     for (var i = 0; i < players[currPlayer].deck.length; i++) {
-        if (inputCard(15+i*45, 330, 40, 55, [0, 174, 255], players[currPlayer].deck[i].value, players[currPlayer].deck[i].order) === true) {
+        if (inputCard(3/80*width+i*9/80*width, 33/40*height, height/10,11/80*height, [0, 174, 255], players[currPlayer].deck[i].value, players[currPlayer].deck[i].order) === true) {
             if (currTurn === true && players[currPlayer].deck[i].used === false && inArray(players[currPlayer].func[players[currPlayer].func.length-1], numerals) === false) {
                 players[currPlayer].deck[i].order = players[currPlayer].func.length+1;
                 players[currPlayer].func.push(players[currPlayer].deck[i].value);
@@ -334,7 +379,7 @@ var game = function() {
     
     //operations
     for (var i = 0; i < 4; i++) {
-        if (inputCard(15+i*45, 265, 40, 55, [255, 100, 100], operationsDeck[i].value, operationsDeck[i].order) === true) {
+        if (inputCard(3/80*width+i*9/80*width, 53/80*height, height/10, 11/80*height, [255, 100, 100], operationsDeck[i].value, operationsDeck[i].order) === true) {
             if (currTurn === true && inArray(players[currPlayer].func[players[currPlayer].func.length-1], operations) === false && players[currPlayer].func.length > 0 && players[currPlayer].func.length < 9) {
                 operationsDeck[i].order.push(players[currPlayer].func.length+1);
                 players[currPlayer].func.push(operationsDeck[i].value);
@@ -344,10 +389,10 @@ var game = function() {
     }
     
     //wipe & giveup button
-    if (inputCard(205, 265, 80, 55, [150, 150, 150], "キャンセル", 0) === true && currTurn === true) {
+    if (inputCard(41/80*width, 53/80*height, width/5, height*11/80, [150, 150, 150], "キャンセル", 0) === true && currTurn === true) {
         wipe(currPlayer);
     }
-    if (inputCard(245, 330, 80, 55, [100, 100, 100], "ギブアップ", 0) === true && currTurn === true) {
+    if (inputCard(49/80*width, 33/40*height, width/5, height*11/80, [100, 100, 100], "ギブアップ", 0) === true && currTurn === true) {
         wipe(currPlayer);
         changeTurn();
         lastPenalty = millis();
@@ -355,7 +400,7 @@ var game = function() {
     }
     
     //equals card, ans check
-    if (inputCard(300, 265, 80, 55, [220, 220, 220], "=", 0) === true && currTurn === true && inArray(players[currPlayer].func[players[currPlayer].func.length-1], operations) === false) {
+    if (inputCard(3/4*width, 53/80*height, width/5, height*11/80, [220, 220, 220], "=", 0) === true && currTurn === true && inArray(players[currPlayer].func[players[currPlayer].func.length-1], operations) === false) {
         if (testAns(players[currPlayer].func, currAns) === false) {
             timer[1] += 180;
             lastPenalty = millis();
@@ -376,43 +421,43 @@ var game = function() {
     }
     
     //timer
-    textSize(30);
-    fill(0, 0, 0);
-    text(timer[0], 75, 200);
+    textSize(1/10*height);
+    fill(255*timer[0]/timerLimit, 0, 0);
+    text(timer[0], 3/16*width, height/2);
     penaltyCol(lastPenalty);
-    text(timer[0], 75, 200);
+    text(timer[0], 3/16*width, height/2);
     
     //scores
-    textSize(20);
+    textSize(1/20*height);
     fill(0, 0, 0);
-    text("残り:\n" + score[currPlayer], 365, 360);
+    text("残り:\n" + score[currPlayer], 73/80*width, 9/10*height);
     penaltyCol(lastScore[0], [100, 230, 100]);
-    text("残り:\n" + score[currPlayer], 365, 360);
+    text("残り:\n" + score[currPlayer], 73/80*width, 9/10*height);
     
     //alert text
     penaltyCol(lastGU, [0, 0, 0]);
-    textSize(15);
-    text("ギブアップ", 75, 230);
+    textSize(3/80*height);
+    text("ギブアップ", 3/16*width, 47/80*height);
     penaltyCol(lastWrong);
-    text("違います", 75, 230); 
+    text("違います", 3/16*width, 47/80*height); 
     penaltyCol(lastTimeout);
-    text("タイムアウト", 75, 230);
+    text("タイムアウト", 3/16*width, 47/80*height);
     
     penaltyCol(maxArr(lastScore), [230, 230, 100]);
-    text("成功", 75, 230);
+    text("成功", 3/16*width, 47/80*height);
     
     //win or loss check
     if (playerCount === 1) {
         if (score[0] === 0) {
             fill(255, 255, 255, 150);
             noStroke();
-            rect(0, 0, 400, 400);
+            rect(0, 0, width, height);
             gameState = "CPUwin";
         }
         if (score[1] === 0) {
             fill(255, 255, 255, 150);
             noStroke();
-            rect(0, 0, 400, 400);
+            rect(0, 0, width, height);
             gameState = "CPUloss";
         }
     }
@@ -421,7 +466,7 @@ var game = function() {
             if (score[i] === 0) {
                 fill(255, 255, 255, 150);
                 noStroke();
-                rect(0, 0, 400, 400);
+                rect(0, 0, width, height);
                 gameState = "multiWin";
             }
         }
@@ -437,35 +482,35 @@ var game = function() {
 };
 var winScreen = function() {
     fill(0, 0, 0);
-    textSize(30);
+    textSize(3/40*width);
     text("おめでとうございます！\n勝ちです。", 200, 150);
     if (inputCard(125, 250, 150, 100, [220, 100, 100], "", 0) === true) {
         gameState = "game";
         resetGame();
     }
-    textSize(25);
+    textSize(1/16*width);
     text("やり直す", 200, 300);
 };
 var loseScreen = function() {
     fill(0, 0, 0);
-    textSize(100);
+    textSize(1/4*height);
     text("あ", 200, 150);
     if (inputCard(125, 250, 150, 100, [100, 100, 220], "", 0) === true) {
         gameState = "game";
         resetGame();
     }
-    textSize(25);
+    textSize(1/16*width);
     text("やり直す", 200, 300);
 };
 var multiWinScreen = function() {
     fill(0, 0, 0);
-    textSize(30);
+    textSize(3/40*width);
     text("終了です！\nP"+(currPlayer)+"の優勝", 200, 150);
     if (inputCard(125, 250, 150, 100, [220, 100, 100], "", 0) === true) {
         gameState = "game";
         resetGame();
     }
-    textSize(25);
+    textSize(1/16*width);
     text("やり直す", 200, 300);
 };
 
@@ -474,6 +519,9 @@ var draw = function() {
     switch (gameState) {
         case "homeScreen":
             homeScreen();
+            break;
+        case "playerSelect":
+            playerSelect();
             break;
         case "game":
             game();

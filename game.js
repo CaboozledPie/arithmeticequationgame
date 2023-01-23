@@ -347,6 +347,7 @@ var game = function() {
                 targetPlayer -= playerCount;
             }
             fill(0, 0, 0);
+            textSize(width/30);
             text("P"+(targetPlayer+1), width/20+(((i+1)%2)*39/80*width), 19/200*height+(floor((i-1)/2)*height/10));
             text(score[targetPlayer], 19/40*width+(((i+1)%2)*39/80*width), 19/200*height+(floor((i-1)/2)*height/10));
             for (var x = 0; x < players[targetPlayer].deck.length; x++) {

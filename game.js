@@ -19,7 +19,6 @@ var mousePressing = false;
 textAlign(CENTER, CENTER);
 
 var score = [];
-var lastScore = [];
 var gameState = "homeScreen";
 var numerals = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var operations = ["+", "-", "x", "/"];
@@ -36,6 +35,7 @@ var lastPenalty = -10000;
 var lastGU = -10000;
 var lastWrong = -10000;
 var lastTimeout = -10000;
+var lastScore = [];
 
 //convenience/function
 var maxArr = function(arr) {
@@ -245,7 +245,7 @@ var deckSetup = function() {
     }
     for (var i = 0; i < max(2, playerCount); i++) {
         score.push(goalScore);
-        lastScore.push(0);
+        lastScore.push(-10000);
     }
 };
 

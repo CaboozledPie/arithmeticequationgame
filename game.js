@@ -17,8 +17,7 @@ frameRate(60);
 var mouseIsReleased = false;
 var mousePressing = false;
 textAlign(CENTER, CENTER);
-
-//variables
+{
 var score = [];
 var lastScore = [];
 var gameState = "homeScreen";
@@ -31,18 +30,7 @@ var operationsDeck = [{value: "+", order: []}, {value: "-", order: []}, {value: 
 
 var currPlayer = 0;
 var players = [];
-var deckSetup = function() {
-    for (var i = 0; i < playerCount; i++) {
-        players.push({deck: [], func: []});
-        for (var x = 0; x < 5; x++) {
-            players[i].deck.push({value: round(random(0.5, numCardLimit + 0.49)), order: 0, used: false});
-        }
-    }
-    for (var i = 0; i < max(2, playerCount); i++) {
-        score.push(goalScore);
-        lastScore.push(0);
-    }
-};
+}
 
 //color timers
 var lastPenalty = 0;
@@ -229,8 +217,10 @@ var testAns = function(func, ans) {
     return false;
 };
 var resetGame = function() {
+    score = [];
     for (var i = 0; i < players.length; i++) {
-        wipe(i);
+        players[i].deck = [];
+        players[i].func = [];
     }
     if (playerCount !== 1) {
         currPlayer -= 1;
@@ -244,6 +234,21 @@ var resetGame = function() {
     }
     currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
 };
+var deckSetup = function() {
+    for (var i = 0; i < playerCount; i++) {
+        players.push({deck: [], func: []});
+        for (var x = 0; x < 5; x++) {
+            players[i].deck.push({value: round(random(0.5, numCardLimit + 0.49)), order: 0, used: false});
+        }
+    }
+    for (var i = 0; i < operationsDeck.length; i++) {
+        operationsDeck[i].order = [];
+    }
+    for (var i = 0; i < max(2, playerCount); i++) {
+        score.push(goalScore);
+        lastScore.push(0);
+    }
+};
 
 //gamestates
 var homeScreen = function() {
@@ -254,6 +259,7 @@ var homeScreen = function() {
     if (inputCard(1/8*width, 77/120*height, width/3, height/4, [130, 130, 170], "", 0) === true) {
         playerCount = 1;
         deckSetup();
+        score[0] = 1;
         gameState = "game";
     }
     if (inputCard(13/24*width, 77/120*height, width/3, height/4, [200, 100, 100], "", 0) === true) {
@@ -309,20 +315,20 @@ var game = function() {
     //turn text
     fill(0, 0, 0);
     if (currTurn === true) {
-        textSize(3/80*width);
+        textSize(3.5/80*width);
         if (playerCount === 1) {
-            text("あなたのターン", 33/40*width, 37/80*height);
+            text("あなたのターン", 32/40*width, 37/80*height);
         }
         else {
-            text("P"+(currPlayer+1)+"のターン", 33/40*width, 37/80*height);
+            text("P"+(currPlayer+1)+"のターン", 32/40*width, 37/80*height);
         }
-        text("式を作りなさい", 33/40*width, 43/80*height);
+        text("式を作りなさい", 32/40*width, 43/80*height);
         }
     else {
         textSize(height/20);
-        text("CPUターン", 33/40*width, 37/80*height);
+        text("CPUターン", 32/40*width, 37/80*height);
         textSize(3/80*height);
-        text("欲しくない数を換\nえれます", 33/40*width, 9/16*height);
+        text("欲しくない数を換\nえれます", 32/40*width, 9/16*height);
     }
     
     //CPU-specific code
@@ -490,35 +496,35 @@ var game = function() {
 var winScreen = function() {
     fill(0, 0, 0);
     textSize(3/40*width);
-    text("おめでとうございます！\n勝ちです。", 200, 150);
-    if (inputCard(125, 250, 150, 100, [220, 100, 100], "", 0) === true) {
-        gameState = "game";
+    text("おめでとうございます！\n勝ちです。", width/2, 3/8*height);
+    if (inputCard(5/16*width, 5/8*height, 3/8*width, height/4, [220, 100, 100], "", 0) === true) {
+        gameState = "homeScreen";
         resetGame();
     }
     textSize(1/16*width);
-    text("やり直す", 200, 300);
+    text("やり直す", width/2, 3/4*height);
 };
 var loseScreen = function() {
     fill(0, 0, 0);
     textSize(1/4*height);
-    text("あ", 200, 150);
-    if (inputCard(125, 250, 150, 100, [100, 100, 220], "", 0) === true) {
-        gameState = "game";
+    text("あ", width/2, 3/8*height);
+    if (inputCard(5/16*width, 5/8*height, 3/8*width, height/4, [100, 100, 220], "", 0) === true) {
+        gameState = "homeScreen";
         resetGame();
     }
     textSize(1/16*width);
-    text("やり直す", 200, 300);
+    text("やり直す", width/2, 3/4*height);
 };
 var multiWinScreen = function() {
     fill(0, 0, 0);
     textSize(3/40*width);
-    text("終了です！\nP"+(currPlayer)+"の優勝", 200, 150);
-    if (inputCard(125, 250, 150, 100, [220, 100, 100], "", 0) === true) {
-        gameState = "game";
+    text("終了です！\nP"+(currPlayer)+"の優勝", width/2, 3/8*height);
+    if (inputCard(5/16*width, 5/8*height, 3/8*width, height/4, [220, 100, 100], "", 0) === true) {
+        gameState = "homeScreen";
         resetGame();
     }
     textSize(1/16*width);
-    text("やり直す", 200, 300);
+    text("やり直す", width/2, 3/4*height);
 };
 
 //processingJS

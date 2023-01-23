@@ -4,7 +4,7 @@ void setup() {
     size(width, height);
 }
 
-//for CPU game choose 1, or input a number for player count (up to 7)
+//originally used as a settings button, now just here for reference (on KA you edit the variable to change settings)
 var playerCount = 1;
 
 //customizables

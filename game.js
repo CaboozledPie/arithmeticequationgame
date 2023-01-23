@@ -32,10 +32,10 @@ var currPlayer = 0;
 var players = [];
 
 //color timers
-var lastPenalty = 0;
-var lastGU = 0;
-var lastWrong = 0;
-var lastTimeout = 0;
+var lastPenalty = -10000;
+var lastGU = -10000;
+var lastWrong = -10000;
+var lastTimeout = -10000;
 
 //convenience/function
 var maxArr = function(arr) {

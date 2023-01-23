@@ -1,0 +1,26 @@
+<meta charset="UTF-8"> 
+<html>
+<head>
+    <script src="processing.js"></script>
+    <script language='javascript' type='text/javascript'>
+        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+        if (isChrome) {
+            document.onkeydown = function (event) {
+                var doPrevent = false;
+                var keyCode = event.charCode ? event.charCode : event.keyCode;
+
+                if (keyCode !== 8) {//if it's not the backspace key, default
+                    return;
+                }
+
+                Processing.getInstanceById("main").keyPressedExternal(8);
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <canvas width="800" height="800" id="main" data-processing-sources="game.js"></canvas>
+</body>
+</html>

@@ -15,6 +15,7 @@ var goalScore = 5;
 
 frameRate(60);
 var mouseIsReleased = false;
+var mouseIsPressed = false;
 textAlign(CENTER, CENTER);
 
 //variables
@@ -541,7 +542,11 @@ void draw() {
             multiWinScreen();
     }
     mouseIsReleased = false;
+    mouseIsPressed = false;
 };
 void mouseReleased() {
     mouseIsReleased = true;
+};
+void mousePressed() {
+    mouseIsPressed = true;
 };

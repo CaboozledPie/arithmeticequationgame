@@ -172,7 +172,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
         if (active === "reset") {
             fill(255, 0, 0);
             noStroke();
-            ellipse(x+w-h/8, y+h/8, 3/11*h, 3/11*h);
+            ellipse(x+w-h/11, y+h/11, 3/11*h, 3/11*h);
         }
         else {
             ellipse(x+w-h/8, y+h/8, height/20, height/20);

@@ -187,7 +187,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
                 fill(0, 0, 0);
                 ellipse(x+width/80, y+height/80+i*height/20, 3/80*height, 3/80*height);
                 fill(255, 255, 255);
-                textSize(3/100*height);
+                textSize(0.026*height);
                 text(active[i], x+width/80, y+height/80+i*height/20);
             }
             if (active.length >= 3) {
@@ -195,7 +195,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
                     fill(0, 0, 0);
                     ellipse(x+w-width/80, y+height/80+i*20-40, 3/80*height, 3/80*height);
                     fill(255, 255, 255);
-                    textSize(3/100*height);
+                    textSize(0.026*height);
                     text(active[i], x+w-width/80, y+height/80+i*height/20-height/10);
                 }
             }

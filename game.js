@@ -184,30 +184,31 @@ var inputCard = function(x, y, w, h, col, input, active) {
         if (active === "reset") {
             fill(255, 0, 0);
             noStroke();
-            ellipse(x+w-5, y+5, 15, 15);
+            ellipse(x+w-width/80, y+height/80, 3/80*height, 3/80*height);
         }
         else {
-            ellipse(x+w-5, y+5, 20, 20);
+            ellipse(x+w-width/80, y+height/80, height/20, height/20);
             fill(255, 255, 255);
-            text(active, x+w-5, y+5);
+            textSize(3/100*height);
+            text(active, x+w-width/80, y+height/80);
         }
     }
     if (typeof(active) === 'object') {
         if (active.length > 0) {
             for (var i = 0; i < min(active.length, 2); i++) {
                 fill(0, 0, 0);
-                ellipse(x+5, y+5+i*20, 15, 15);
+                ellipse(x+width/80, y+height/80+i*height/20, 3/80*height, 3/80*height);
                 fill(255, 255, 255);
-                textSize(12);
-                text(active[i], x+5, y+5+i*20);
+                textSize(3/100*height);
+                text(active[i], x+width/80, y+height/80+i*height/20);
             }
             if (active.length >= 3) {
                 for (var i = 2; i < min(active.length, 4); i++) {
                     fill(0, 0, 0);
-                    ellipse(x+w-5, y+5+i*20-40, 15, 15);
+                    ellipse(x+w-width/80, y+height/80+i*20-40, 3/80*height, 3/80*height);
                     fill(255, 255, 255);
                     textSize(12);
-                    text(active[i], x+w-5, y+5+i*20-40);
+                    text(active[i], x+w-width/80, y+height/80+i*height/20-height/10);
                 }
             }
         }

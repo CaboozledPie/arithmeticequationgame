@@ -161,7 +161,7 @@ var inputCard = function(x, y, w, h, col, input, active) {
     if (mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-30, col[1]-30, col[2]-30);
     }
-    if (mouseIsPressed && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
+    if (mousePressing && mouseX >=x && mouseX <= x+w && mouseY >= y && mouseY <= y+h) {
         fill(col[0]-60, col[1]-60, col[2]-60);
     }
     rect(x, y, w, h, height/40);

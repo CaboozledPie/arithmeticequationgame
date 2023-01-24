@@ -294,7 +294,7 @@ var playerSelect = function() {
     for (var i = 0; i < 6; i++) {
         line(width/6+i*0.134*width, 0.63*height, width/6+i*0.134*width, 0.66*height);
     }
-    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && mousePressing) {
+    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && (mousePressing || mouseIsReleased)) {
         pointerPos = mouseX;
     }
     strokeWeight(1);

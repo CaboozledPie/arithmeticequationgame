@@ -134,7 +134,7 @@ var oppGameplay = function() {
         if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            score[1] -= round(random(1.5, 4.75));
+            score[1] = Math.max(0, score[1] - round(random(1.5, 4.75)));
             wipe(currPlayer);
             lastScore[1] = millis();
         }
@@ -425,7 +425,7 @@ var game = function() {
                     players[currPlayer].deck[i].value = round(random(0.5, numCardLimit + 0.49));
                 }
             }
-            score[currPlayer] -= (players[currPlayer].func.length+1)/2;
+            score[currPlayer] = Math.max(score[currPlayer] - (players[currPlayer].func.length+1)/2, 0);
             changeTurn();
             lastScore[0] = millis();
         }

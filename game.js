@@ -11,7 +11,7 @@ var playerCount = 1;
 var timerLimit = 30;
 var numCardLimit = 9;
 var ansRange = [10, 40];
-var goalScore = 5;
+var goalScore = 20;
 
 frameRate(60);
 var mouseIsReleased = false;
@@ -134,7 +134,7 @@ var oppGameplay = function() {
         if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            score[1] -= 1;
+            score[1] -= round(random(1.5, 4.75));
             wipe(currPlayer);
             lastScore[1] = millis();
         }
@@ -425,7 +425,7 @@ var game = function() {
                     players[currPlayer].deck[i].value = round(random(0.5, numCardLimit + 0.49));
                 }
             }
-            score[currPlayer] -= 1;
+            score[currPlayer] -= (players[currPlayer].func.length+1)/2;
             changeTurn();
             lastScore[0] = millis();
         }

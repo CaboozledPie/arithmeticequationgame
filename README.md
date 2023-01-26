@@ -21,4 +21,5 @@ If this player also fails to answer, play progresses to the next player (or retu
 A player wins once they have used 20 number cards.
 
 関西学院高等学校のためにプラセチアアンドリューに作られました
+
 Created by Andrew Prasetya for Kwansei Gakuin Senior High School's Mathematical Science Club

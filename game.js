@@ -138,7 +138,7 @@ var oppGameplay = function() {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
             var oppScore = round(random(1.5, 4.75));
-            score[1] = Math.min(goalScore, score[1] + oppScore);
+            score[1] += oppScore);
             if (oppScore === 5) {
                 lastBig = millis();
             }
@@ -233,7 +233,6 @@ var resetGame = function() {
     }
     currTurn = true;
     for (var i = 0; i < players.length; i++) {
-        score[i] = 0;
         for (var x = 0; x < players[i].deck.length; x++) {
             players[i].deck[x].value = round(random(0.5, numCardLimit + 0.49));
         }
@@ -432,12 +431,11 @@ var game = function() {
                     players[currPlayer].deck[i].value = round(random(0.5, numCardLimit + 0.49));
                 }
             }
-            score[currPlayer] = Math.min(score[currPlayer] + (players[currPlayer].func.length+1)/2, goalScore);
+            score[currPlayer] += players[currPlayer].func.length+1)/2;
             if (players[currPlayer].func.length === 9) {
                 lastBig = millis();
             }
             lastScore[0] = millis();
-            changeTurn();
         }
         wipe(currPlayer);
     }
@@ -477,13 +475,13 @@ var game = function() {
     
     //win or loss check
     if (playerCount === 1) {
-        if (score[0] === goalScore) {
+        if (score[0] >= goalScore) {
             fill(255, 255, 255, 150);
             noStroke();
             rect(0, 0, width, height);
             gameState = "CPUwin";
         }
-        if (score[1] === goalScore) {
+        if (score[1] >= goalScore) {
             fill(255, 255, 255, 150);
             noStroke();
             rect(0, 0, width, height);
@@ -492,7 +490,7 @@ var game = function() {
     }
     else {
         for (var i = 0; i < score.length; i++) {
-            if (score[i] === goalScore) {
+            if (score[i] >= goalScore) {
                 fill(255, 255, 255, 150);
                 noStroke();
                 rect(0, 0, width, height);
@@ -507,6 +505,11 @@ var game = function() {
         changeTurn();
         lastPenalty = millis();
         lastTimeout = millis();
+    }
+    
+    //change turn
+    if (lastScore[0] === millis()) {
+        changeTurn();
     }
 };
 var winScreen = function() {

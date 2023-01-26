@@ -534,8 +534,8 @@ var loseScreen = function() {
 var multiWinScreen = function() {
     fill(0, 0, 0);
     var winner = 0;
-    for (var i = 0; i < scores.length; i++) {
-        if (scores[i] >= 20) {
+    for (var i = 0; i < score.length; i++) {
+        if (score[i] >= 20) {
             winner = i + 1;
         }
     }

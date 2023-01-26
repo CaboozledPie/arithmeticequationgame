@@ -231,7 +231,7 @@ var resetGame = function() {
     }
     currTurn = true;
     for (var i = 0; i < players.length; i++) {
-        score[i] = goalScore;
+        score[i] = 0;
         for (var x = 0; x < players[i].deck.length; x++) {
             players[i].deck[x].value = round(random(0.5, numCardLimit + 0.49));
         }

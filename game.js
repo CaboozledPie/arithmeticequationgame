@@ -431,7 +431,7 @@ var game = function() {
                     players[currPlayer].deck[i].value = round(random(0.5, numCardLimit + 0.49));
                 }
             }
-            score[currPlayer] += players[currPlayer].func.length+1)/2;
+            score[currPlayer] += (players[currPlayer].func.length+1)/2;
             if (players[currPlayer].func.length === 9) {
                 lastBig = millis();
             }

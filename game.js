@@ -531,8 +531,14 @@ var loseScreen = function() {
 };
 var multiWinScreen = function() {
     fill(0, 0, 0);
+    var winner = 0;
+    for (var i = 0; i < scores.length; i++) {
+        if (scores[i] >= 20) {
+            winner = i + 1;
+        }
+    }
     textSize(3/40*width);
-    text("終了です！\nP"+(currPlayer)+"の優勝", width/2, 3/8*height);
+    text("終了です！\nP"+(winner)+"の優勝", width/2, 3/8*height);
     if (inputCard(5/16*width, 5/8*height, 3/8*width, height/4, [220, 100, 100], "", 0) === true) {
         gameState = "homeScreen";
         resetGame();

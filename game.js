@@ -37,6 +37,7 @@ var lastWrong = -10000;
 var lastTimeout = -10000;
 var lastScore = [];
 var lastBig = -10000;
+var lastChange = -10000;
 
 //convenience/function
 var maxArr = function(arr) {
@@ -97,6 +98,7 @@ var wipe = function(player) {
     }
 };
 var changeTurn = function() {
+    lastChange = millis();
     timer = [0, 1];
     if (playerCount === 1) {
         if (currTurn === true) {
@@ -409,7 +411,7 @@ var game = function() {
     if (inputCard(41/80*width, 53/80*height, width/5, height*11/80, [150, 150, 150], "キャンセル", 0) === true && currTurn === true) {
         wipe(currPlayer);
     }
-    if (inputCard(49/80*width, 33/40*height, width/5, height*11/80, [100, 100, 100], "ギブアップ", 0) === true && currTurn === true) {
+    if (inputCard(49/80*width, 33/40*height, width/5, height*11/80, [100, 100, 100], "ギブアップ", 0) === true && currTurn === true && millis() - lastChange > 2000) {
         wipe(currPlayer);
         changeTurn();
         lastPenalty = millis();

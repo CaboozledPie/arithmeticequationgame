@@ -134,7 +134,7 @@ var oppGameplay = function() {
         if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            score[1] = Math.max(0, score[1] - round(random(1.5, 4.75)));
+            score[1] = Math.min(goalScore, score[1] + round(random(1.5, 4.75)));
             wipe(currPlayer);
             lastScore[1] = millis();
         }
@@ -244,7 +244,7 @@ var deckSetup = function() {
         operationsDeck[i].order = [];
     }
     for (var i = 0; i < max(2, playerCount); i++) {
-        score.push(goalScore);
+        score.push(0);
         lastScore.push(-10000);
     }
 };
@@ -334,9 +334,9 @@ var game = function() {
         oppGameplay();
         fill(0, 0, 0);
         textSize(height/20);
-        text("残り:\n" + score[1], 7/80*width, height/10);
+        text("点数:\n" + score[1] + "/" + goalScore, 7/80*width, height/10);
         penaltyCol(lastScore[1]);
-        text("残り:\n" + score[1], 7/80*width, height/10);
+        text("点数:\n" + score[1] + "/" + goalScore, 7/80*width, height/10);
     }
     
     //multiplayer-specific
@@ -425,7 +425,7 @@ var game = function() {
                     players[currPlayer].deck[i].value = round(random(0.5, numCardLimit + 0.49));
                 }
             }
-            score[currPlayer] = Math.max(score[currPlayer] - (players[currPlayer].func.length+1)/2, 0);
+            score[currPlayer] = Math.min(score[currPlayer] + (players[currPlayer].func.length+1)/2, goalScore);
             changeTurn();
             lastScore[0] = millis();
         }
@@ -442,9 +442,9 @@ var game = function() {
     //scores
     textSize(1/20*height);
     fill(0, 0, 0);
-    text("残り:\n" + score[currPlayer], 73/80*width, 9/10*height);
+    text("点数:\n" + score[currPlayer] + "/" + goalScore, 73/80*width, 9/10*height);
     penaltyCol(lastScore[0], [100, 230, 100]);
-    text("残り:\n" + score[currPlayer], 73/80*width, 9/10*height);
+    text("点数:\n" + score[currPlayer] + "/" + goalScore, 73/80*width, 9/10*height);
     
     //alert text
     penaltyCol(lastGU, [0, 0, 0]);
@@ -460,13 +460,13 @@ var game = function() {
     
     //win or loss check
     if (playerCount === 1) {
-        if (score[0] === 0) {
+        if (score[0] === goalScore) {
             fill(255, 255, 255, 150);
             noStroke();
             rect(0, 0, width, height);
             gameState = "CPUwin";
         }
-        if (score[1] === 0) {
+        if (score[1] === goalScore) {
             fill(255, 255, 255, 150);
             noStroke();
             rect(0, 0, width, height);
@@ -475,7 +475,7 @@ var game = function() {
     }
     else {
         for (var i = 0; i < score.length; i++) {
-            if (score[i] === 0) {
+            if (score[i] === goalScore) {
                 fill(255, 255, 255, 150);
                 noStroke();
                 rect(0, 0, width, height);

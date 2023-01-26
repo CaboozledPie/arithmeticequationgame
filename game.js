@@ -138,7 +138,7 @@ var oppGameplay = function() {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
             var oppScore = round(random(1.5, 4.75));
-            score[1] += oppScore);
+            score[1] += oppScore;
             if (oppScore === 5) {
                 lastBig = millis();
             }

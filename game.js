@@ -36,6 +36,7 @@ var lastGU = -10000;
 var lastWrong = -10000;
 var lastTimeout = -10000;
 var lastScore = [];
+var lastBig = -10000;
 
 //convenience/function
 var maxArr = function(arr) {
@@ -134,7 +135,11 @@ var oppGameplay = function() {
         if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            score[1] = Math.min(goalScore, score[1] + round(random(1.5, 4.75)));
+            var oppScore = round(random(1.5, 4.75));
+            score[1] = min(goalScore, oppScore);
+            if (oppScore === 5) {
+                lastBig = millis();
+            }
             wipe(currPlayer);
             lastScore[1] = millis();
         }
@@ -426,8 +431,11 @@ var game = function() {
                 }
             }
             score[currPlayer] = Math.min(score[currPlayer] + (players[currPlayer].func.length+1)/2, goalScore);
-            changeTurn();
+            if (players[currPlayer].func.length === 9) {
+                lastBig = millis();
+            }
             lastScore[0] = millis();
+            changeTurn();
         }
         wipe(currPlayer);
     }
@@ -455,8 +463,15 @@ var game = function() {
     penaltyCol(lastTimeout);
     text("タイムアウト", 3/16*width, 47/80*height);
     
-    penaltyCol(maxArr(lastScore), [230, 230, 100]);
-    text("成功", 3/16*width, 47/80*height);
+    if (lastBig < maxArr(lastScore)) {
+        penaltyCol(maxArr(lastScore), [230, 230, 100]);
+        text("成功", 3/16*width, 47/80*height);
+    }
+    else {
+        penaltyCol(lastBig, [255, 255, 0]);
+        textSize(width/4);
+        text("大成功", width/2, height/2);
+    }
     
     //win or loss check
     if (playerCount === 1) {

@@ -10,7 +10,7 @@
 
 20枚の数カードを使えるプレイヤーが勝ちます。
 
-Rules (English): Each player has five number cards with numbers 0 through 9 A number picked from the "answer" deck (generally larger numbers) is randomly placed in the center of the table, and a randomly chosen player begins the game.
+Rules (English): Each player has five number cards with numbers 0 through 9. A number picked from the "answer" deck (generally larger numbers) is randomly placed in the center of the table, and a randomly chosen player begins the game.
 
 On this player's turn, they have until the time limit (default 30 seconds) to create a valid expression using their cards and the operations "+", "-", "\*", and/or "/" that equals the answer card in the center (you signify completion by clicking equals). They're allowed to try as many times as they want within that time limit (with a three second penalty per incorrect guess); if they successfully create a valid expression, the used number cards are replaced with with new ones.
 

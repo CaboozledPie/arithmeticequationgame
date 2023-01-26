@@ -12,7 +12,7 @@
 
 Rules (English): Each player has five number cards with numbers 0 through 9. A number picked from the "answer" deck (generally larger numbers) is randomly placed in the center of the table, and a randomly chosen player begins the game.
 
-On this player's turn, they have until the time limit (default 30 seconds) to create a valid expression using their cards and the operations "+", "-", "\*", and/or "/" that equals the answer card in the center (you signify completion by clicking equals). They're allowed to try as many times as they want within that time limit (with a three second penalty per incorrect guess); if they successfully create a valid expression, the used number cards are replaced with with new ones.
+On this player's turn, they have until the time limit (default 30 seconds) to create a valid expression using their cards and the operations "+", "-", "\*", and/or "/" that equals the answer card in the center (you signify completion by clicking =). They're allowed to try as many times as they want within that time limit (with a three second penalty per incorrect guess); if they successfully create a valid expression, the used number cards are replaced with with new ones.
 
 However, if they fail to provide a correct equation within the time limit, the next player now has the opportunity to play their cards for the same answer. While the other player is playing their turn, the previous player may swap any of their cards for a new random number, but only while the other player is playing their turn, and only up to once per card.
 

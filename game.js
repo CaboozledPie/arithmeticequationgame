@@ -228,9 +228,7 @@ var resetGame = function() {
         players[i].deck = [];
         players[i].func = [];
     }
-    if (playerCount !== 1) {
-        currPlayer -= 1;
-    }
+    currPlayer = 0;
     currTurn = true;
     for (var i = 0; i < players.length; i++) {
         for (var x = 0; x < players[i].deck.length; x++) {
@@ -240,6 +238,7 @@ var resetGame = function() {
     currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
 };
 var deckSetup = function() {
+    players = [];
     for (var i = 0; i < playerCount; i++) {
         players.push({deck: [], func: []});
         for (var x = 0; x < 5; x++) {
@@ -312,6 +311,7 @@ var playerSelect = function() {
     playerCount = Math.round((pointerPos-width/6)/(0.134*width)+2);
 };
 var game = function() {
+    var scored = false;
     timer[1]++;
     timer[0] = ceil(timer[1]/60);
     background(156, 96, 0);
@@ -436,6 +436,7 @@ var game = function() {
                 lastBig = millis();
             }
             lastScore[0] = millis();
+            scored = true;
         }
         wipe(currPlayer);
     }
@@ -508,9 +509,10 @@ var game = function() {
     }
     
     //change turn
-    if (lastScore[0] === millis()) {
+    if (scored) {
         changeTurn();
     }
+    scored = false;
 };
 var winScreen = function() {
     fill(0, 0, 0);

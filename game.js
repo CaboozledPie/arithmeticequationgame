@@ -12,6 +12,8 @@ var timerLimit = 30;
 var numCardLimit = 9;
 var ansRange = [10, 40];
 var goalScore = 20;
+var cpuOptions = [[[1.5, 3], 4000], [[1.5, 4], 3000], [[2.5, 5], 2000], [[3, 5], 1500], [[4.25, 5.49], 1000]];
+var cpuStrength = cpuOptions[2];
 
 frameRate(60);
 var mouseIsReleased = false;
@@ -134,10 +136,10 @@ var oppGameplay = function() {
     fill(100, 100, 100);
     rect(3/16*width, 3/80*height, height/5, 11/80*height, height/40);
     if (currTurn === false) {
-        if (round(random(0.5, 2000.49)) === 1 && currTurn === false && timer[0] > 5) {
+        if (round(random(0.5, cpuStrength[1])) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            var oppScore = round(random(1.5, 4.75));
+            var oppScore = round(random(cpuStrength[0][0], cpuStrength[0][1]));
             score[1] += oppScore;
             if (oppScore === 5) {
                 lastBig = millis();
@@ -146,7 +148,7 @@ var oppGameplay = function() {
             lastScore[1] = millis();
         }
         if (timer[1] === timerLimit*30) {
-            if (round(random(0.5, 2.49)) === 1) {
+            if (round(random(0.5, 3.49)) === 1) {
                 wipe(currPlayer);
                 changeTurn();
                 lastGU = millis();

@@ -13,7 +13,7 @@ var numCardLimit = 9;
 var ansRange = [10, 40];
 var goalScore = 20;
 var cpuOptions = [[[1.5, 3], 4000], [[1.5, 4], 3000], [[2.5, 5], 2000], [[3, 5], 1500], [[4.25, 5.49], 1000]];
-var cpuStrength = cpuOptions[2];
+var cpuStrength = 1;
 
 frameRate(60);
 var mouseIsReleased = false;
@@ -136,19 +136,19 @@ var oppGameplay = function() {
     fill(100, 100, 100);
     rect(3/16*width, 3/80*height, height/5, 11/80*height, height/40);
     if (currTurn === false) {
-        if (round(random(0.5, cpuStrength[1])) === 1 && currTurn === false && timer[0] > 5) {
+        if (round(random(0.5, cpuOptions[cpuStrength][1])) === 1 && currTurn === false && timer[0] > 5) {
             currAns = round(random(ansRange[0]-0.5, ansRange[1]+0.49));
             changeTurn();
-            var oppScore = round(random(cpuStrength[0][0], cpuStrength[0][1]));
+            var oppScore = round(random(cpuOptions[cpuStrength][0][0], cpuOptions[cpuStrength][0][1]));
             score[1] += oppScore;
             if (oppScore === 5) {
                 lastBig = millis();
             }
-            wipe(currPlayer);
             lastScore[1] = millis();
+            wipe(currPlayer);
         }
         if (timer[1] === timerLimit*30) {
-            if (round(random(0.5, 3.49)) === 1) {
+            if (round(random(0.5, 2.49)) === 1) {
                 wipe(currPlayer);
                 changeTurn();
                 lastGU = millis();
@@ -265,7 +265,7 @@ var homeScreen = function() {
     if (inputCard(1/8*width, 77/120*height, width/3, height/4, [130, 130, 170], "", 0) === true) {
         playerCount = 1;
         deckSetup();
-        gameState = "game";
+        gameState = "cpuSettings";
     }
     if (inputCard(13/24*width, 77/120*height, width/3, height/4, [200, 100, 100], "", 0) === true) {
         playerCount = 2;
@@ -276,14 +276,65 @@ var homeScreen = function() {
     text("CPUゲーム", 7/24*width, 23/30*height);
     text("マルチプレイ", 17/24*width, 23/30*height);
 };
+var cpuSettings = function() {
+    var cpuPointer = width/6+(cpuStrength)*0.167*width;
+    background(130, 130, 170);
+    textSize(width/10);
+    fill(0, 0, 0);
+    text("CPUの強さを\n選んでください", width/2, height/3);
+    strokeWeight(1);
+    if (inputCard(1/25*width, 1/25*height, width/6, height/8, [100, 100, 100], "", 0) === true) {
+        gameState = "homeScreen";
+    }
+    if (inputCard(width/4, 0.73*height, width/2, height/5, [200, 100, 100], "", 0) === true) {
+        deckSetup();
+        gameState = "game";
+    }
+    fill(0, 0, 0);
+    textSize(height/20);
+    text("戻る", width*0.127, height*0.105);
+    strokeWeight(height/40);
+    line(width/6, 0.63*height, 5/6*width, 0.63*height);
+    for (var i = 0; i < 5; i++) {
+        line(width/6+i*0.167*width, 0.63*height, width/6+i*0.167*width, 0.66*height);
+    }
+    if (mouseX >= width/6 && mouseX <= 5/6*width && mouseY >= width/2.5 && mouseY <= 0.7*height && (mousePressing || mouseIsReleased)) {
+        cpuPointer = mouseX;
+    }
+    strokeWeight(1);
+    fill(255, 0, 0);
+    triangle(cpuPointer, 0.6*height, cpuPointer - width/25, 0.55*height, cpuPointer + width/25, 0.55*height);
+    fill(0, 0, 0);
+    textSize(width/20);
+    switch (cpuStrength) {
+        case 0:
+            text("弱い", cpuPointer-1, 0.51*height);
+            break;
+        case 1:
+            text("普通", cpuPointer-1, 0.51*height);
+            break;
+        case 2:
+            text("強い", cpuPointer-1, 0.51*height);
+            break;
+        case 3:
+            text("とても強い", cpuPointer-1, 0.51*height);
+            break;
+        case 4:
+            text("鬼", cpuPointer-1, 0.51*height);
+            break;
+    }
+    textSize(width/16);
+    text("始めましょう!", width/2, height*0.835);
+    cpuStrength = Math.round((cpuPointer-width/6)/(0.167*width)+2)-2;
+};
 var playerSelect = function() {
     var pointerPos = width/6+(playerCount-2)*0.134*width;
     background(200, 100, 100);
     textSize(width/10);
     fill(0, 0, 0);
-    text("何人で\n遊びますか", width/2, height/3.5);
+    text("何人で\n遊びますか", width/2, height/3);
     strokeWeight(1);
-    if (inputCard(1/25*width, 1/25*height, width/6, height/8, [130, 130, 170], "", 0) === true) {
+    if (inputCard(1/25*width, 1/25*height, width/6, height/8, [100, 100, 100], "", 0) === true) {
         gameState = "homeScreen";
     }
     if (inputCard(width/4, 0.73*height, width/2, height/5, [130, 130, 170], "", 0) === true) {
@@ -561,6 +612,9 @@ void draw() {
     switch (gameState) {
         case "homeScreen":
             homeScreen();
+            break;
+        case "cpuSettings":
+            cpuSettings();
             break;
         case "playerSelect":
             playerSelect();

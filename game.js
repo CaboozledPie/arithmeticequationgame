@@ -147,7 +147,7 @@ var oppGameplay = function() {
             lastScore[1] = millis();
             wipe(currPlayer);
         }
-        if (timer[1] === timerLimit*30) {
+        if (timer[1] === timerLimit*40) {
             if (round(random(0.5, 2.49)) === 1) {
                 wipe(currPlayer);
                 changeTurn();

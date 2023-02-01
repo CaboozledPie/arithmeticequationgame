@@ -148,7 +148,7 @@ var oppGameplay = function() {
             wipe(currPlayer);
         }
         if (timer[1] === timerLimit*40) {
-            if (round(random(0.5, 2.49)) === 1) {
+            if (round(random(0.5, 3.49)) === 1) {
                 wipe(currPlayer);
                 changeTurn();
                 lastGU = millis();

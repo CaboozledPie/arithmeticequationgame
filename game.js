@@ -268,7 +268,7 @@ var homeScreen = function() {
         gameState = "cpuSettings";
     }
     if (inputCard(13/24*width, 77/120*height, width/3, height/4, [200, 100, 100], "", 0) === true) {
-        playerCount = 2;
+        playerCount = max(playerCount, 2);
         gameState = "playerSelect";
     }
     fill(0, 0, 0);

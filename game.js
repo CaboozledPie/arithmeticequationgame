@@ -12,7 +12,7 @@ var timerLimit = 30;
 var numCardLimit = 9;
 var ansRange = [10, 40];
 var goalScore = 20;
-var cpuOptions = [[[1.5, 3], 6000], [[2, 4], 4000], [[2.5, 4.75], 2500], [[3, 5], 1800], [[3.75, 5.49], 800]];
+var cpuOptions = [[[1.5, 3], 4000], [[2, 4], 3000], [[2.5, 4.75], 2000], [[3, 5], 1400], [[3.75, 5.49], 800]];
 var cpuStrength = 1;
 
 frameRate(60);

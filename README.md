@@ -23,3 +23,5 @@ A player wins once they have used 20 number cards.
 関西学院高等学校数理科学部のプラセチアアンドリューに作られました
 
 Created by Andrew Prasetya of Kwansei Gakuin Senior High School Mathematical Science Club
+
+https://caboozledpie.github.io/arithmeticequationgame/
